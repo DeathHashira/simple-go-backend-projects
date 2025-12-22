@@ -6,12 +6,38 @@ import (
 	"math"
 	"math/rand"
 	"os"
+	"os/exec"
+	"runtime"
 	"strconv"
-
-	clearcall "example.com/hello/projects/simple-go-backend-projects"
 )
 
 var bestTry int
+
+// clear CLI
+var clear map[string]func()
+
+func init() {
+	clear = make(map[string]func())
+	clear["linux"] = func() {
+		cmd := exec.Command("clear")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	}
+	clear["windows"] = func() {
+		cmd := exec.Command("cmd", "/c", "cls")
+		cmd.Stdout = os.Stdout
+		cmd.Run()
+	}
+}
+
+func CallClear() {
+	value, ok := clear[runtime.GOOS]
+	if ok {
+		value()
+	} else {
+		panic("Your platform is unsupported! I can't clear terminal screen :(")
+	}
+}
 
 func HowFar(guess int, goal int) int {
 	distance := int(math.Abs(float64(guess - goal)))
@@ -53,7 +79,7 @@ func Count(attemp int) {
 
 func main() {
 
-	clearcall.CallClear()
+	CallClear()
 	scanner := bufio.NewScanner(os.Stdin)
 	redo := true
 	var chanceNum int
@@ -68,7 +94,7 @@ func main() {
 		if err != nil {
 			fmt.Println("It's not a valid choice. Do it again. Press enter to continue...")
 			scanner.Scan()
-			clearcall.CallClear()
+			CallClear()
 			continue
 		}
 		switch difficulty {
@@ -81,18 +107,18 @@ func main() {
 		default:
 			println("It's not a valid choice. Do it again. Press enter to continue...")
 			scanner.Scan()
-			clearcall.CallClear()
+			CallClear()
 			continue
 		}
 		guessingNum := rand.Intn(99) + 1
-		clearcall.CallClear()
+		CallClear()
 		Count(chanceNum - attemps + 1)
 
 		for i := 0; i < chanceNum; i++ {
 			fmt.Printf("Enter your guess: ")
 			scanner.Scan()
 			usrNum, err := strconv.Atoi(scanner.Text())
-			clearcall.CallClear()
+			CallClear()
 			Count(chanceNum - attemps)
 			if err != nil {
 				fmt.Println("Oh no. You just lost your attempt with invalid choice. Be more carefull.")
@@ -104,7 +130,7 @@ func main() {
 				break
 			} else {
 				if chanceNum-attemps == 0 {
-					clearcall.CallClear()
+					CallClear()
 					break
 				}
 				switch HowFar(usrNum, guessingNum) {
@@ -133,7 +159,7 @@ func main() {
 			}
 		}
 		if won {
-			clearcall.CallClear()
+			CallClear()
 			if bestTry == 0 {
 				bestTry = attemps
 			} else {
@@ -156,6 +182,6 @@ func main() {
 			scanner.Scan()
 			return
 		}
-		clearcall.CallClear()
+		CallClear()
 	}
 }
