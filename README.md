@@ -10,6 +10,7 @@ This Markdown will update after each project is done.
     - [Task Tracker](#task-tracker)
     - [Number Guessing game](#number-guessing-game)
     - [Weather API](weather-api)
+    - [User Github Activity](user-github-activity)
 
 # Beginner level
 ## Task Tracker
@@ -45,3 +46,13 @@ Build a weather API that fetches and returns weather data.
 In this project, instead of relying on our own weather data, we will build a weather API that fetches and returns weather data from a 3rd party API. This project will help you understand how to work with 3rd party APIs, caching, and environment variables.
 
 For more information check [here](https://roadmap.sh/projects/weather-api-wrapper-service).
+
+## User Github Activity
+Use GitHub API to fetch user activity and display it in the terminal.
+### Requirements
+The application should run from the command line, accept the GitHub username as an argument, fetch the user's recent activity using the GitHub API, and display it in the terminal. The user should be able to:
+- Provide the GitHub username as an argument when running the CLI.
+- Fetch the recent activity of the specified GitHub user using the GitHub API. You can use the following endpoint to fetch the user's activity.
+- Display the fetched activity in the terminal.
+
+For more information check [here](https://roadmap.sh/projects/github-user-activity).
